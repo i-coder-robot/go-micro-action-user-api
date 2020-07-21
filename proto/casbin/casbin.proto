@@ -1,0 +1,39 @@
+syntax="proto3";
+package casbin;
+
+service CasBin{
+    rpc AddPermission(Request) returns(Response){}
+    rpc DeletePermission(Request) returns(Response) {}
+    rpc UpdatePermission(Request) returns(Response){}
+    rpc GetPermission(Request) returns (Response){}
+
+    rpc AddRole(Request) returns(Response){}
+    rpc DeleteRole(Request) returns(Response){}
+    rpc UpdateRole(Request) returns(Response){}
+    rpc GetRoles(Request) returns(Response){}
+
+    rpc Validate(Request) returns(Response){}
+}
+
+message Permission{
+    string service=1;
+    string method=2;
+}
+
+message Request{
+    string label=1;
+    string role=2;
+    repeated string roles = 3;
+    Permission permission = 4;
+    repeated Permission permissions = 5;
+}
+
+message Response{
+    bool valid = 1;
+    string babel=2;
+    string role = 3;
+    repeated string roles=4;
+    Permission permission = 5;
+    repeated Permission permissions = 6;
+
+}

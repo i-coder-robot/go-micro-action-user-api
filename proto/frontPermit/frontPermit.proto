@@ -1,0 +1,41 @@
+syntax="proto3";
+package frontPermit;
+
+service FrontPermits{
+    rpc All(Request) returns (Response){}
+    rpc List(Request) returns(Response){}
+    rpc Get(Request) returns(Response){}
+    rpc Create(Request) returns(Response) {}
+    rpc Update(Request) returns(Response) {}
+    rpc Delete(Request) returns(Response) {}
+    rpc UpdateOrCreate(Request) returns(Response){}
+}
+
+message FrontPermit{
+    int64 id=1;
+    string app =2;
+    string service =3;
+    string method =4;
+    string name=5;
+    string description=6;
+    string created_at = 7;
+    string updated_at=8;
+}
+
+message ListQuery{
+    int64 limit=1;
+    int64 page=2;
+    string sort=3;
+    string where=4;
+}
+message Request{
+    ListQuery list_query=1;
+    FrontPermit front_permit=2;
+}
+
+message Response{
+    bool valid = 1;
+    int64 total = 2;
+    FrontPermit front_permit = 3;
+    repeated FrontPermit front_permits=4;
+}

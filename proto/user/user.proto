@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package user;
+
+service Users{
+    rpc Exist(Request) returns (Response) {}
+    rpc List(Request) returns (Response) {}
+    rpc Get(Request) returns (Response){}
+    rpc Create(Request) returns (Response){}
+    rpc Update(Request) returns (Response) {}
+    rpc Delete(Request) returns (Response) {}
+}
+
+message User{
+    string id=1;
+    string username=2;
+    string mobile=3;
+    string email =4;
+    string password=5;
+    string name =6;
+    string avatar = 7;
+    string origin = 8; //注册来源
+    string create_at=9;
+    string update_at=10;
+}
+
+message ListQuery{
+    int64 limit=1;
+    int64 page=2;
+    string sort = 3;
+    string where =4;
+}
+
+message Request {
+    ListQuery list_query = 1;
+    User user =2;
+}
+
+message Response {
+    bool valid=1;
+    int64 total = 2;
+    User user=3;
+    repeated User users=4;
+}
