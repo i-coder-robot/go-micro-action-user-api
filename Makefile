@@ -25,7 +25,7 @@ proto:
 
 .PHONY: docker
 docker:
-	docker build -f Dockerfile  -t user-api .
+	docker build -f Dockerfile -t go-micro-action-user-api .
 .PHONY: run
 run:
 	go run main.go
