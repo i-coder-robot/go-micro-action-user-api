@@ -33,40 +33,41 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Api Endpoints for CasBin service
+// Api Endpoints for Casbin service
 
-func NewCasBinEndpoints() []*api.Endpoint {
+func NewCasbinEndpoints() []*api.Endpoint {
 	return []*api.Endpoint{}
 }
 
-// Client API for CasBin service
+// Client API for Casbin service
 
-type CasBinService interface {
+type CasbinService interface {
+	// 角色权限管理
 	AddPermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	DeletePermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	UpdatePermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	GetPermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	DeletePermissions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	UpdatePermissions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	GetPermissions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 用户角色管理
 	AddRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	DeleteRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	UpdateRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	DeleteRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	UpdateRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	GetRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Validate(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
-type casBinService struct {
+type casbinService struct {
 	c    client.Client
 	name string
 }
 
-func NewCasBinService(name string, c client.Client) CasBinService {
-	return &casBinService{
+func NewCasbinService(name string, c client.Client) CasbinService {
+	return &casbinService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *casBinService) AddPermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.AddPermission", in)
+func (c *casbinService) AddPermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.AddPermission", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -75,8 +76,8 @@ func (c *casBinService) AddPermission(ctx context.Context, in *Request, opts ...
 	return out, nil
 }
 
-func (c *casBinService) DeletePermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.DeletePermission", in)
+func (c *casbinService) DeletePermissions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.DeletePermissions", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,8 +86,8 @@ func (c *casBinService) DeletePermission(ctx context.Context, in *Request, opts 
 	return out, nil
 }
 
-func (c *casBinService) UpdatePermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.UpdatePermission", in)
+func (c *casbinService) UpdatePermissions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.UpdatePermissions", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -95,8 +96,8 @@ func (c *casBinService) UpdatePermission(ctx context.Context, in *Request, opts 
 	return out, nil
 }
 
-func (c *casBinService) GetPermission(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.GetPermission", in)
+func (c *casbinService) GetPermissions(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.GetPermissions", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -105,8 +106,8 @@ func (c *casBinService) GetPermission(ctx context.Context, in *Request, opts ...
 	return out, nil
 }
 
-func (c *casBinService) AddRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.AddRole", in)
+func (c *casbinService) AddRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.AddRole", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -115,8 +116,8 @@ func (c *casBinService) AddRole(ctx context.Context, in *Request, opts ...client
 	return out, nil
 }
 
-func (c *casBinService) DeleteRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.DeleteRole", in)
+func (c *casbinService) DeleteRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.DeleteRoles", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -125,8 +126,8 @@ func (c *casBinService) DeleteRole(ctx context.Context, in *Request, opts ...cli
 	return out, nil
 }
 
-func (c *casBinService) UpdateRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.UpdateRole", in)
+func (c *casbinService) UpdateRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.UpdateRoles", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -135,8 +136,8 @@ func (c *casBinService) UpdateRole(ctx context.Context, in *Request, opts ...cli
 	return out, nil
 }
 
-func (c *casBinService) GetRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.GetRoles", in)
+func (c *casbinService) GetRoles(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Casbin.GetRoles", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -145,85 +146,71 @@ func (c *casBinService) GetRoles(ctx context.Context, in *Request, opts ...clien
 	return out, nil
 }
 
-func (c *casBinService) Validate(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "CasBin.Validate", in)
-	out := new(Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
+// Server API for Casbin service
 
-// Server API for CasBin service
-
-type CasBinHandler interface {
+type CasbinHandler interface {
+	// 角色权限管理
 	AddPermission(context.Context, *Request, *Response) error
-	DeletePermission(context.Context, *Request, *Response) error
-	UpdatePermission(context.Context, *Request, *Response) error
-	GetPermission(context.Context, *Request, *Response) error
+	DeletePermissions(context.Context, *Request, *Response) error
+	UpdatePermissions(context.Context, *Request, *Response) error
+	GetPermissions(context.Context, *Request, *Response) error
+	// 用户角色管理
 	AddRole(context.Context, *Request, *Response) error
-	DeleteRole(context.Context, *Request, *Response) error
-	UpdateRole(context.Context, *Request, *Response) error
+	DeleteRoles(context.Context, *Request, *Response) error
+	UpdateRoles(context.Context, *Request, *Response) error
 	GetRoles(context.Context, *Request, *Response) error
-	Validate(context.Context, *Request, *Response) error
 }
 
-func RegisterCasBinHandler(s server.Server, hdlr CasBinHandler, opts ...server.HandlerOption) error {
-	type casBin interface {
+func RegisterCasbinHandler(s server.Server, hdlr CasbinHandler, opts ...server.HandlerOption) error {
+	type casbin interface {
 		AddPermission(ctx context.Context, in *Request, out *Response) error
-		DeletePermission(ctx context.Context, in *Request, out *Response) error
-		UpdatePermission(ctx context.Context, in *Request, out *Response) error
-		GetPermission(ctx context.Context, in *Request, out *Response) error
+		DeletePermissions(ctx context.Context, in *Request, out *Response) error
+		UpdatePermissions(ctx context.Context, in *Request, out *Response) error
+		GetPermissions(ctx context.Context, in *Request, out *Response) error
 		AddRole(ctx context.Context, in *Request, out *Response) error
-		DeleteRole(ctx context.Context, in *Request, out *Response) error
-		UpdateRole(ctx context.Context, in *Request, out *Response) error
+		DeleteRoles(ctx context.Context, in *Request, out *Response) error
+		UpdateRoles(ctx context.Context, in *Request, out *Response) error
 		GetRoles(ctx context.Context, in *Request, out *Response) error
-		Validate(ctx context.Context, in *Request, out *Response) error
 	}
-	type CasBin struct {
-		casBin
+	type Casbin struct {
+		casbin
 	}
-	h := &casBinHandler{hdlr}
-	return s.Handle(s.NewHandler(&CasBin{h}, opts...))
+	h := &casbinHandler{hdlr}
+	return s.Handle(s.NewHandler(&Casbin{h}, opts...))
 }
 
-type casBinHandler struct {
-	CasBinHandler
+type casbinHandler struct {
+	CasbinHandler
 }
 
-func (h *casBinHandler) AddPermission(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.AddPermission(ctx, in, out)
+func (h *casbinHandler) AddPermission(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.AddPermission(ctx, in, out)
 }
 
-func (h *casBinHandler) DeletePermission(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.DeletePermission(ctx, in, out)
+func (h *casbinHandler) DeletePermissions(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.DeletePermissions(ctx, in, out)
 }
 
-func (h *casBinHandler) UpdatePermission(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.UpdatePermission(ctx, in, out)
+func (h *casbinHandler) UpdatePermissions(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.UpdatePermissions(ctx, in, out)
 }
 
-func (h *casBinHandler) GetPermission(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.GetPermission(ctx, in, out)
+func (h *casbinHandler) GetPermissions(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.GetPermissions(ctx, in, out)
 }
 
-func (h *casBinHandler) AddRole(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.AddRole(ctx, in, out)
+func (h *casbinHandler) AddRole(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.AddRole(ctx, in, out)
 }
 
-func (h *casBinHandler) DeleteRole(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.DeleteRole(ctx, in, out)
+func (h *casbinHandler) DeleteRoles(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.DeleteRoles(ctx, in, out)
 }
 
-func (h *casBinHandler) UpdateRole(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.UpdateRole(ctx, in, out)
+func (h *casbinHandler) UpdateRoles(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.UpdateRoles(ctx, in, out)
 }
 
-func (h *casBinHandler) GetRoles(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.GetRoles(ctx, in, out)
-}
-
-func (h *casBinHandler) Validate(ctx context.Context, in *Request, out *Response) error {
-	return h.CasBinHandler.Validate(ctx, in, out)
+func (h *casbinHandler) GetRoles(ctx context.Context, in *Request, out *Response) error {
+	return h.CasbinHandler.GetRoles(ctx, in, out)
 }

@@ -42,9 +42,12 @@ func NewAuthEndpoints() []*api.Endpoint {
 // Client API for Auth service
 
 type AuthService interface {
-	Auth(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	ValidateToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	AuthById(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 用户验证授权
+	Auth(ctx context.Context, in *Request, opts ...client.CallOption) (*Request, error)
+	// 用户退出登录
+	Logout(ctx context.Context, in *Request, opts ...client.CallOption) (*Request, error)
+	// token 验证
+	ValidateToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Request, error)
 }
 
 type authService struct {
@@ -59,9 +62,9 @@ func NewAuthService(name string, c client.Client) AuthService {
 	}
 }
 
-func (c *authService) Auth(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+func (c *authService) Auth(ctx context.Context, in *Request, opts ...client.CallOption) (*Request, error) {
 	req := c.c.NewRequest(c.name, "Auth.Auth", in)
-	out := new(Response)
+	out := new(Request)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -69,19 +72,19 @@ func (c *authService) Auth(ctx context.Context, in *Request, opts ...client.Call
 	return out, nil
 }
 
-func (c *authService) ValidateToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+func (c *authService) Logout(ctx context.Context, in *Request, opts ...client.CallOption) (*Request, error) {
+	req := c.c.NewRequest(c.name, "Auth.Logout", in)
+	out := new(Request)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authService) ValidateToken(ctx context.Context, in *Request, opts ...client.CallOption) (*Request, error) {
 	req := c.c.NewRequest(c.name, "Auth.ValidateToken", in)
-	out := new(Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *authService) AuthById(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Auth.AuthById", in)
-	out := new(Response)
+	out := new(Request)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -92,16 +95,19 @@ func (c *authService) AuthById(ctx context.Context, in *Request, opts ...client.
 // Server API for Auth service
 
 type AuthHandler interface {
-	Auth(context.Context, *Request, *Response) error
-	ValidateToken(context.Context, *Request, *Response) error
-	AuthById(context.Context, *Request, *Response) error
+	// 用户验证授权
+	Auth(context.Context, *Request, *Request) error
+	// 用户退出登录
+	Logout(context.Context, *Request, *Request) error
+	// token 验证
+	ValidateToken(context.Context, *Request, *Request) error
 }
 
 func RegisterAuthHandler(s server.Server, hdlr AuthHandler, opts ...server.HandlerOption) error {
 	type auth interface {
-		Auth(ctx context.Context, in *Request, out *Response) error
-		ValidateToken(ctx context.Context, in *Request, out *Response) error
-		AuthById(ctx context.Context, in *Request, out *Response) error
+		Auth(ctx context.Context, in *Request, out *Request) error
+		Logout(ctx context.Context, in *Request, out *Request) error
+		ValidateToken(ctx context.Context, in *Request, out *Request) error
 	}
 	type Auth struct {
 		auth
@@ -114,14 +120,14 @@ type authHandler struct {
 	AuthHandler
 }
 
-func (h *authHandler) Auth(ctx context.Context, in *Request, out *Response) error {
+func (h *authHandler) Auth(ctx context.Context, in *Request, out *Request) error {
 	return h.AuthHandler.Auth(ctx, in, out)
 }
 
-func (h *authHandler) ValidateToken(ctx context.Context, in *Request, out *Response) error {
-	return h.AuthHandler.ValidateToken(ctx, in, out)
+func (h *authHandler) Logout(ctx context.Context, in *Request, out *Request) error {
+	return h.AuthHandler.Logout(ctx, in, out)
 }
 
-func (h *authHandler) AuthById(ctx context.Context, in *Request, out *Response) error {
-	return h.AuthHandler.AuthById(ctx, in, out)
+func (h *authHandler) ValidateToken(ctx context.Context, in *Request, out *Request) error {
+	return h.AuthHandler.ValidateToken(ctx, in, out)
 }

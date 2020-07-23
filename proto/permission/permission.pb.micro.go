@@ -42,12 +42,19 @@ func NewPermissionsEndpoints() []*api.Endpoint {
 // Client API for Permissions service
 
 type PermissionsService interface {
+	// 权限验证授权
+	// 全部权限
 	All(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 获取权限列表
 	List(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 根据 唯一 获取权限
 	Get(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 创建权限
 	Create(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 更新权限
 	Update(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Sync(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 删除权限
+	Delete(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type permissionsService struct {
@@ -112,8 +119,8 @@ func (c *permissionsService) Update(ctx context.Context, in *Request, opts ...cl
 	return out, nil
 }
 
-func (c *permissionsService) Sync(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Permissions.Sync", in)
+func (c *permissionsService) Delete(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Permissions.Delete", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -125,12 +132,19 @@ func (c *permissionsService) Sync(ctx context.Context, in *Request, opts ...clie
 // Server API for Permissions service
 
 type PermissionsHandler interface {
+	// 权限验证授权
+	// 全部权限
 	All(context.Context, *Request, *Response) error
+	// 获取权限列表
 	List(context.Context, *Request, *Response) error
+	// 根据 唯一 获取权限
 	Get(context.Context, *Request, *Response) error
+	// 创建权限
 	Create(context.Context, *Request, *Response) error
+	// 更新权限
 	Update(context.Context, *Request, *Response) error
-	Sync(context.Context, *Request, *Response) error
+	// 删除权限
+	Delete(context.Context, *Request, *Response) error
 }
 
 func RegisterPermissionsHandler(s server.Server, hdlr PermissionsHandler, opts ...server.HandlerOption) error {
@@ -140,7 +154,7 @@ func RegisterPermissionsHandler(s server.Server, hdlr PermissionsHandler, opts .
 		Get(ctx context.Context, in *Request, out *Response) error
 		Create(ctx context.Context, in *Request, out *Response) error
 		Update(ctx context.Context, in *Request, out *Response) error
-		Sync(ctx context.Context, in *Request, out *Response) error
+		Delete(ctx context.Context, in *Request, out *Response) error
 	}
 	type Permissions struct {
 		permissions
@@ -173,6 +187,6 @@ func (h *permissionsHandler) Update(ctx context.Context, in *Request, out *Respo
 	return h.PermissionsHandler.Update(ctx, in, out)
 }
 
-func (h *permissionsHandler) Sync(ctx context.Context, in *Request, out *Response) error {
-	return h.PermissionsHandler.Sync(ctx, in, out)
+func (h *permissionsHandler) Delete(ctx context.Context, in *Request, out *Response) error {
+	return h.PermissionsHandler.Delete(ctx, in, out)
 }

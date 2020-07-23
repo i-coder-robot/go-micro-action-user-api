@@ -1,42 +1,52 @@
-syntax="proto3";
+syntax = "proto3";
+
 package permission;
 
 service Permissions {
-    rpc All(Request) returns (Response){}
-    rpc List(Request) returns(Response){}
-    rpc Get(Request) returns(Response){}
-    rpc Create(Request) returns(Response){}
-    rpc Update(Request) returns(Response){}
-    rpc Sync(Request) returns (Response){}
+    // 权限验证授权
+    // 全部权限
+    rpc All(Request) returns (Response) {}
+    // 获取权限列表
+    rpc List(Request) returns (Response) {}
+    // 根据 唯一 获取权限
+    rpc Get(Request) returns (Response) {}
+    // 创建权限
+    rpc Create(Request) returns (Response) {}
+    // 更新权限
+    rpc Update(Request) returns (Response) {}
+    // 删除权限
+    rpc Delete(Request) returns (Response) {}
+
 }
 
-
 message Permission {
-    int64 id=1;
-    string service=2;
-    string method =3;
-    string name =4;
-    string description=5;
-    bool auth=6;
-    bool policy=7;
-    string created_at=8;
-    string updated_at=9;
+    int64 id = 1;
+    string service = 2;
+    string method = 3;
+    string name = 4;
+    string description = 5;
+    bool auth = 6;
+    bool policy = 7;
+    string created_at = 8;
+    string updated_at = 9;
 }
 
 message ListQuery{
-    int64 limit=1;
-    int64 page=2;
-    string sort =3;
-    string where =4;
+    int64 limit=1; //返回数量
+    int64 page=2; //页面
+    string sort=3; // 排序
+    string where = 4;       // 查询条件
 }
-message Request {
-    ListQuery list_query =1;
-    Permission permission =2;
+
+message Request{
+    ListQuery list_query = 1;           // 列表分页请求
+    Permission permission = 2;
     repeated Permission permissions = 3;
 }
+
 message Response{
     bool valid = 1;
     int64 total = 2;
-    Permission permission =3;
+    Permission permission = 3;
     repeated Permission permissions = 4;
 }

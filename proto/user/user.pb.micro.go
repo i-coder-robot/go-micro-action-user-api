@@ -42,11 +42,23 @@ func NewUsersEndpoints() []*api.Endpoint {
 // Client API for Users service
 
 type UsersService interface {
+	// 用过 用户名、邮箱、手机 查询用户是否存在
 	Exist(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 绑定手机 更新同时更新其他用户信息
+	MobileBuild(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 用户通过 token 自己更新数据 只可以更改 用户名、昵称、头像
+	SelfUpdate(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 根据 唯一 获取用户
+	Info(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 获取用户列表
 	List(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 根据 唯一 获取用户
 	Get(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 创建用户
 	Create(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 更新用户
 	Update(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 删除用户
 	Delete(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
@@ -64,6 +76,36 @@ func NewUsersService(name string, c client.Client) UsersService {
 
 func (c *usersService) Exist(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
 	req := c.c.NewRequest(c.name, "Users.Exist", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersService) MobileBuild(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Users.MobileBuild", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersService) SelfUpdate(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Users.SelfUpdate", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersService) Info(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Users.Info", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -125,17 +167,32 @@ func (c *usersService) Delete(ctx context.Context, in *Request, opts ...client.C
 // Server API for Users service
 
 type UsersHandler interface {
+	// 用过 用户名、邮箱、手机 查询用户是否存在
 	Exist(context.Context, *Request, *Response) error
+	// 绑定手机 更新同时更新其他用户信息
+	MobileBuild(context.Context, *Request, *Response) error
+	// 用户通过 token 自己更新数据 只可以更改 用户名、昵称、头像
+	SelfUpdate(context.Context, *Request, *Response) error
+	// 根据 唯一 获取用户
+	Info(context.Context, *Request, *Response) error
+	// 获取用户列表
 	List(context.Context, *Request, *Response) error
+	// 根据 唯一 获取用户
 	Get(context.Context, *Request, *Response) error
+	// 创建用户
 	Create(context.Context, *Request, *Response) error
+	// 更新用户
 	Update(context.Context, *Request, *Response) error
+	// 删除用户
 	Delete(context.Context, *Request, *Response) error
 }
 
 func RegisterUsersHandler(s server.Server, hdlr UsersHandler, opts ...server.HandlerOption) error {
 	type users interface {
 		Exist(ctx context.Context, in *Request, out *Response) error
+		MobileBuild(ctx context.Context, in *Request, out *Response) error
+		SelfUpdate(ctx context.Context, in *Request, out *Response) error
+		Info(ctx context.Context, in *Request, out *Response) error
 		List(ctx context.Context, in *Request, out *Response) error
 		Get(ctx context.Context, in *Request, out *Response) error
 		Create(ctx context.Context, in *Request, out *Response) error
@@ -155,6 +212,18 @@ type usersHandler struct {
 
 func (h *usersHandler) Exist(ctx context.Context, in *Request, out *Response) error {
 	return h.UsersHandler.Exist(ctx, in, out)
+}
+
+func (h *usersHandler) MobileBuild(ctx context.Context, in *Request, out *Response) error {
+	return h.UsersHandler.MobileBuild(ctx, in, out)
+}
+
+func (h *usersHandler) SelfUpdate(ctx context.Context, in *Request, out *Response) error {
+	return h.UsersHandler.SelfUpdate(ctx, in, out)
+}
+
+func (h *usersHandler) Info(ctx context.Context, in *Request, out *Response) error {
+	return h.UsersHandler.Info(ctx, in, out)
 }
 
 func (h *usersHandler) List(ctx context.Context, in *Request, out *Response) error {

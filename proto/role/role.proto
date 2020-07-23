@@ -2,38 +2,45 @@ syntax = "proto3";
 
 package role;
 
-service Roles{
-    rpc All(Request) returns (Response){}
-    rpc List(Request) returns (Response){}
-    rpc Get(Request) returns(Response){}
-    rpc Create(Request) returns (Response){}
-    rpc Update(Request) returns(Response){}
-    rpc Delete(Request) returns(Response){}
+service Roles {
+    // 权限验证授权
+    // 全部权限
+    rpc All(Request) returns (Response) {}
+    // 获取权限列表
+    rpc List(Request) returns (Response) {}
+    // 根据 唯一 获取权限
+    rpc Get(Request) returns (Response) {}
+    // 创建权限
+    rpc Create(Request) returns (Response) {}
+    // 更新权限
+    rpc Update(Request) returns (Response) {}
+    // 删除权限
+    rpc Delete(Request) returns (Response) {}
+
 }
 
-message Role{
-    int64 id=1;
-    string label =2;
-    string name =3;
+message Role {
+    int64 id = 1;
+    string label = 2;
+    string name = 3;
     string description = 4;
-    string create_at=5;
+    string created_at = 5;
     string updated_at = 6;
 }
 
 message ListQuery{
-    int64 limit = 1;
-    int64 page=2;
-    string sort=3;
-    string where=4;
+    int64 limit=1;                      //返回数量
+    int64 page=2;                       //页面
+    string sort=3;                      // 排序
+    string where = 4;       // 查询条件
 }
-message Request{
-    ListQuery list_query=1;
+message Request{    
+    ListQuery list_query = 1;           // 列表分页请求
     Role role = 2;
 }
-
 message Response{
-    bool valid =1;
-    int64 total =2;
-    Role role=3;
-    repeated Role roles=4;
+    bool valid = 1;
+    int64 total = 2;
+    Role role = 3;
+    repeated Role roles = 4;
 }

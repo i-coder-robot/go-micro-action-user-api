@@ -2,9 +2,13 @@ package handler
 
 import (
 	"context"
+	"errors"
 	client "github.com/i-coder-robot/go-micro-action-core/client"
-	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/auth"
 	casbinPB "github.com/i-coder-robot/go-micro-action-user-api/proto/casbin"
+	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/user"
+	"github.com/i-coder-robot/go-micro-action-user-api/providers/redis"
+	"github.com/micro/go-micro/v2/metadata"
+	"github.com/micro/go-micro/v2/util/log"
 )
 
 // User 用户结构
@@ -110,6 +114,7 @@ func (srv *User) Info(ctx context.Context, req *pb.Request, res *pb.Response) (e
 					frontPermit = append(frontPermit, frontPermitRes.Roles...)
 				}
 			}
+
 			res.FrontPermits = frontPermit
 			res.Roles = rolesRes.Roles
 		}

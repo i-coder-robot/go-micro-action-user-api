@@ -42,11 +42,18 @@ func NewRolesEndpoints() []*api.Endpoint {
 // Client API for Roles service
 
 type RolesService interface {
+	// 权限验证授权
+	// 全部权限
 	All(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 获取权限列表
 	List(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 根据 唯一 获取权限
 	Get(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 创建权限
 	Create(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 更新权限
 	Update(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	// 删除权限
 	Delete(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
@@ -125,11 +132,18 @@ func (c *rolesService) Delete(ctx context.Context, in *Request, opts ...client.C
 // Server API for Roles service
 
 type RolesHandler interface {
+	// 权限验证授权
+	// 全部权限
 	All(context.Context, *Request, *Response) error
+	// 获取权限列表
 	List(context.Context, *Request, *Response) error
+	// 根据 唯一 获取权限
 	Get(context.Context, *Request, *Response) error
+	// 创建权限
 	Create(context.Context, *Request, *Response) error
+	// 更新权限
 	Update(context.Context, *Request, *Response) error
+	// 删除权限
 	Delete(context.Context, *Request, *Response) error
 }
 

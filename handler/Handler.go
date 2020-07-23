@@ -12,7 +12,7 @@ import (
 	permissionPB "github.com/i-coder-robot/go-micro-action-user-api/proto/permission"
 	rolePB "github.com/i-coder-robot/go-micro-action-user-api/proto/role"
 	userPB "github.com/i-coder-robot/go-micro-action-user-api/proto/user"
-	PB "github.com/i-coder-robot/go-micro-action-user/user/proto/permission"
+	PB "github.com/i-coder-robot/go-micro-action-user/proto/permission"
 	"github.com/micro/go-micro/v2/server"
 	"time"
 )

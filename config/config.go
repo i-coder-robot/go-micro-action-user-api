@@ -3,7 +3,7 @@ package config
 import (
 	"github.com/i-coder-robot/go-micro-action-core/config"
 	"github.com/i-coder-robot/go-micro-action-core/env"
-	PB "github.com/i-coder-robot/go-micro-action-user/user/proto/permission"
+	PB "github.com/i-coder-robot/go-micro-action-user/proto/permission"
 )
 
 var Conf = config.Config{
