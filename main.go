@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/i-coder-robot/go-micro-action-user-api/config"
-	"github.com/micro/go-micro"
+	"github.com/i-coder-robot/go-micro-action-user-api/handler"
 	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/util/log"
 )
