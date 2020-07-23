@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 	client "github.com/i-coder-robot/go-micro-action-core/client"
-	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/auth"
 	casbinPB "github.com/i-coder-robot/go-micro-action-user-api/proto/casbin"
+	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/frontPermit"
 )
 // FrontPermit 权限结构
 type FrontPermit struct {

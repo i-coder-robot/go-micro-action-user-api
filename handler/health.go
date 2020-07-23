@@ -2,7 +2,7 @@ package handler
 
 import (
 	"context"
-	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/auth"
+	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/health"
 )
 
 // Health 用户结构

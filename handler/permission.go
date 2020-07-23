@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 	client "github.com/i-coder-robot/go-micro-action-core/client"
-	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/auth"
+	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/permission"
 )
 
 // Permission 权限结构

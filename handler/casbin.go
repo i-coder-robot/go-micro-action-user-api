@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 	client "github.com/i-coder-robot/go-micro-action-core/client"
-	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/auth"
+	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/casbin"
 )
 
 // Casbin 授权服务处理
