@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package health;
+package go.micro.api;
 
 service Health {
     // Health 监控检查
-    rpc Health(Request) returns (Response) {}
+    rpc Health(go.micro.api.Request) returns (go.micro.api.Response) {}
 }
 
 message Request {
