@@ -5,7 +5,7 @@ package health;
 service Health {
     // Health 监控检查
     rpc Health(Request) returns (Response) {}
-}make
+}
 
 message Request {
 }
