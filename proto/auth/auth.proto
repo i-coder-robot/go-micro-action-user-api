@@ -4,12 +4,12 @@ package auth;
 
 service Auth {
     // 用户验证授权
-    rpc Auth(Request) returns (Request) {}
+    rpc Auth(Request) returns (Response) {}
      // 用户退出登录
-    rpc Logout(Request) returns (Request) {}
+    rpc Logout(Request) returns (Response) {}
     
     // token 验证
-    rpc ValidateToken(Request) returns (Request) {}
+    rpc ValidateToken(Request) returns (Response) {}
 
 }
 

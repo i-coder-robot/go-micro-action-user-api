@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"errors"
+	"fmt"
 	client "github.com/i-coder-robot/go-micro-action-core/client"
 	casbinPB "github.com/i-coder-robot/go-micro-action-user-api/proto/casbin"
 	pb "github.com/i-coder-robot/go-micro-action-user-api/proto/user"
@@ -126,11 +127,14 @@ func (srv *User) Info(ctx context.Context, req *pb.Request, res *pb.Response) (e
 
 // List 用户列表
 func (srv *User) List(ctx context.Context, req *pb.Request, res *pb.Response) (err error) {
+	fmt.Println("api-user-list")
+	fmt.Println(req.ListQuery)
 	return client.Call(ctx, srv.ServiceName, "Users.List", req, res)
 }
 
 // Get 获取用户
 func (srv *User) Get(ctx context.Context, req *pb.Request, res *pb.Response) (err error) {
+
 	err = client.Call(ctx, srv.ServiceName, "Users.Get", req, res)
 	if res.User != nil {
 		res.User.Password = ""
